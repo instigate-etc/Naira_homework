@@ -1,0 +1,21 @@
+---------------This is README file for Bubble Sorting and Binary Search.---------------
+
+Content
+1.Author
+2.Introduction
+
+
+Author
+ITC
+Naira Poghosyan
+
+Introduction
+With this program sorting is not unregulated sequence.
+Program written in Java programming language.
+If you work with vim you need to compile java files before running the program:
+         javac MainBubbleSorting.java
+After write this command:
+         java MainBubbleSorting
+You can find this program in https://github.com/student105/my_repo/edit/master/Naira/BubbleSort  repository.
+
+--------------------------------Thenk you!-------------------------------------------
