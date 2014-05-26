@@ -16,6 +16,7 @@ position:relative;
 	width:600px;
 	height:500px;
 	margin: auto;
+
 }
 #player{
 background: url(../images/list_background.png) no-repeat;
@@ -24,19 +25,19 @@ width:200px;
 height:120px;
 }
 #nardy img{
-position: absolute;
-//right:82px;
 
+position: absolute;
 }
 
 input{
-margin-right:70px;
+margin-left:50px;
+margin-top:30px;
   background: #ff6e0d;
   background-image: -webkit-linear-gradient(top, #ff6e0d, #b87f2b);
   background-image: -moz-linear-gradient(top, #ff6e0d, #b87f2b);
   background-image: -ms-linear-gradient(top, #ff6e0d, #b87f2b);
   background-image: -o-linear-gradient(top, #ff6e0d, #b87f2b);
-  background-image: linear-gradient(to bottom, #ff6e0d, #b87f2b);
+  background-image: linear-gradient( bottom, #ff6e0d, #b87f2b);
   -webkit-border-radius: 60;
   -moz-border-radius: 60;
   border-radius: 60px;
@@ -47,6 +48,33 @@ margin-right:70px;
   text-decoration: none;
 }
 form{
+width:350px;
 margin-top:60px;
-margin-left:42%;
+margin:auto;
+}
+td{
+	width: 28px;
+	height: 22px;
+}
+table{
+	position:absolute;
+	left: 75px;
+}
+#zar{
+margin-top:20px;
+margin-left: 47%;
+width:200px;
+height: 80px;
+}
+#zarbut{
+	margin-left:110px;
+	
+}
+footer{
+	position:absolute;
+	bottom: 2px;
+	  background: #d59797;
+	  height: 30px;
+	  width: 100%;
+	  color:#fff;
 }
