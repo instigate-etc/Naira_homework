@@ -1,7 +1,8 @@
 function Place() {
 	this.imgwhite = "images/qar.png";
 	this.imgred = "images/qar1.png";
-
+	this.state;
+	this.counts;
 }
 
 var zar = {
@@ -25,15 +26,21 @@ var zar = {
 		"imgindex" : 6
 	}]
 };
-var count = {
-	"imgcount" : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-}
+var place = new Place();
 function Nardy() {
 	this.tdarr = new Array();
+	place.counts={
+	"imgcount" :[{"count":0,"state":2},]
+	};
+for(i=1;i<24;i++){
+place.counts.imgcount.push(
+    {"count":0,"state":2}
+);
+}
 }
 
 function clickZar() {
-	this.statecolor=0;
+	this.statecolor = 0;
 	math = Math.floor((Math.random() * zar.zarimg.length));
 	math1 = Math.floor((Math.random() * zar.zarimg.length));
 	var zardiv = document.getElementById("zar");
@@ -41,8 +48,9 @@ function clickZar() {
 	document.getElementById('image2').src = zar.zarimg[math1].srcimg;
 	Place.prototype.chose(statecolor);
 }
+
 var nardy = new Nardy();
-var place = new Place();
+
 var lasttb = 0;
 var math;
 var math1;
@@ -61,27 +69,34 @@ function iftrue() {
 function redStone() {
 	var index = 12;
 	var tb = document.getElementById("table2ID");
-	if (lasttb == 0) {
+	if (lasttb == 0 || lasttb == 1) {
+		place.counts.imgcount[12].count=15;
+		place.counts.imgcount[12].state=1;
 		Nardy.table(index, tb);
 		lasttb++;
 	}
-	Place.prototype.convas(index, -23, 1);
+	Place.prototype.convas(index, -23, place.counts.imgcount[12].state);
 	iftrue();
-clickZar.prototype.statecolor=1;
+	clickZar.prototype.statecolor = place.counts.imgcount[12].state;
 }
 
 function whiteStone() {
 	var index = 0;
 	var tb = document.getElementById("table1ID");
-	Nardy.table(index, tb);
-	Place.prototype.convas(index, 23, 0);
+	if (lasttb == 1 || lasttb == 0) {
+		place.counts.imgcount[11].count=15;
+		place.counts.imgcount[11].state=0;
+		Nardy.table(index, tb);
+		lasttb++;
+	}
+	
+	Place.prototype.convas(index, 23, place.counts.imgcount[11].state);
 	iftrue();
-	Place.prototype.chose(0);
-	clickZar.prototype.statecolor=2;
+	clickZar.prototype.statecolor = place.counts.imgcount[11].state;
 }
 
 Nardy.table = function(index, tb) {
-	
+
 	var tr = document.createElement('tr');
 	for (var i1 = index; i1 < index + 12; i1++) {
 		var td = document.createElement('td');
@@ -103,24 +118,24 @@ Place.prototype.chose = function(state) {
 			if (pp == 0) {
 				var tdsid1 = this.id;
 				f1 = tdsid1.slice(4, 6);
-				count.imgcount[f1] = count.imgcount[f1] - 1;
+				place.counts.imgcount[f1].count = place.counts.imgcount[f1].count - 1;
 				//	alert(f1);
-				alert("remove" + count.imgcount[f1]);
+				alert("remove" + place.counts.imgcount[f1].count);
 				pp = 1;
 			} else {
 				var tdsid = this.id;
 				f = tdsid.slice(4, 6);
-				count.imgcount[f] = count.imgcount[f] + 1;
-				alert("add" + count.imgcount[f]);
+				place.counts.imgcount[f].count = place.counts.imgcount[f].count + 1;
+				alert("add" + place.counts.imgcount[f].count);
 				pp = 0;
 				if (parseInt(f1) >= 12) {
 					e = parseInt(f) - parseInt(f1);
 				} else {
 					e = parseInt(f1) - parseInt(f);
 				}
-				if(state==0 &&  parseInt(f)>11){
+				if (state == 0 && parseInt(f) > 11) {
 					e = parseInt(f) - parseInt(f1);
-				alert("fgfgdff");
+					alert("fgfgdff");
 				}
 
 			}
@@ -132,11 +147,11 @@ Place.prototype.chose = function(state) {
 Place.prototype.convas = function(index, top, state) {
 
 	for (var i1 = index; i1 < index + 12; i1++) {
-		td =document.getElementById(nardy.tdarr[i1]);
-		for ( i = 0; i < count.imgcount[i1]; i++) {
+		td = document.getElementById(nardy.tdarr[i1]);
+		for ( i = 0; i < place.counts.imgcount[i1].count; i++) {
 			var img = document.createElement("img");
 			if (state == 0) {
-				img.src =place.imgwhite;
+				img.src = place.imgwhite;
 			} else {
 				img.src = place.imgred;
 			}
