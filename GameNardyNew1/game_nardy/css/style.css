@@ -1,0 +1,51 @@
+*{
+	padding:0;
+	margin:0;	
+}
+body {
+	background:url(../images/0_68e94_87fa8a90_L.png) no-repeat;
+	margin:auto;
+}
+h1{
+	text-align:center;
+	color:#d59797;
+}
+#nardy{
+position:relative;
+	background: url(../images/nardy.jpg);
+	width:600px;
+	height:500px;
+	margin: auto;
+}
+#player{
+background: url(../images/list_background.png) no-repeat;
+margin-left:300px;
+width:200px;
+height:120px;
+}
+#nardy img{
+position: absolute;
+//right:82px;
+
+}
+input{
+margin-right:70px;
+  background: #ff6e0d;
+  background-image: -webkit-linear-gradient(top, #ff6e0d, #b87f2b);
+  background-image: -moz-linear-gradient(top, #ff6e0d, #b87f2b);
+  background-image: -ms-linear-gradient(top, #ff6e0d, #b87f2b);
+  background-image: -o-linear-gradient(top, #ff6e0d, #b87f2b);
+  background-image: linear-gradient(to bottom, #ff6e0d, #b87f2b);
+  -webkit-border-radius: 60;
+  -moz-border-radius: 60;
+  border-radius: 60px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 10px 10px 10px;
+  text-decoration: none;
+}
+form{
+margin-top:60px;
+margin-left:42%;
+}
