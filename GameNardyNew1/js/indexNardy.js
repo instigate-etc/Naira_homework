@@ -75,9 +75,9 @@ function redStone() {
 		Nardy.table(index, tb);
 		lasttb++;
 	}
-	Place.prototype.convas(index, -23, place.counts.imgcount[12].state);
+	Place.prototype.convas(index, -23,1);
 	iftrue();
-	clickZar.prototype.statecolor = place.counts.imgcount[12].state;
+	clickZar.prototype.statecolor = 1;
 }
 
 function whiteStone() {
@@ -90,9 +90,9 @@ function whiteStone() {
 		lasttb++;
 	}
 	
-	Place.prototype.convas(index, 23, place.counts.imgcount[11].state);
+	Place.prototype.convas(index, 23, 0);
 	iftrue();
-	clickZar.prototype.statecolor = place.counts.imgcount[11].state;
+	clickZar.prototype.statecolor =0;
 }
 
 Nardy.table = function(index, tb) {
@@ -122,6 +122,7 @@ Place.prototype.chose = function(state) {
 				//	alert(f1);
 				alert("remove" + place.counts.imgcount[f1].count);
 				pp = 1;
+				place.counts.imgcount[i1].state=state;
 			} else {
 				var tdsid = this.id;
 				f = tdsid.slice(4, 6);
@@ -133,11 +134,7 @@ Place.prototype.chose = function(state) {
 				} else {
 					e = parseInt(f1) - parseInt(f);
 				}
-				if (state == 0 && parseInt(f) > 11) {
-					e = parseInt(f) - parseInt(f1);
-					alert("fgfgdff");
-				}
-
+			
 			}
 
 		}
