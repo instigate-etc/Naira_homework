@@ -1,149 +1,147 @@
 function Place() {
 	this.imgwhite = "images/qar.png";
 	this.imgred = "images/qar1.png";
-
+	this.state = 2;
+	this.count = 0;
 }
 
-var zar = {
-	"zarimg" : [{
-		"srcimg" : "images/zar1.png",
-		"imgindex" : 1
-	}, {
-		"srcimg" : "images/zar2.png",
-		"imgindex" : 2
-	}, {
-		"srcimg" : "images/zar3.png",
-		"imgindex" : 3
-	}, {
-		"srcimg" : "images/zar4.png",
-		"imgindex" : 4
-	}, {
-		"srcimg" : "images/zar5.png",
-		"imgindex" : 5
-	}, {
-		"srcimg" : "images/zar6.png",
-		"imgindex" : 6
-	}]
-};
-var count = {
-	"imgcount" : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-}
+var zar = [1, 2, 3, 4, 5, 6]
+var place = new Place();
 function Nardy() {
 	this.tdarr = new Array();
+	this.countState = {
+		"imgcount" : []
+	};
+	for ( i = 1; i < 24; i++) {
+		this.countState.imgcount.push({
+			"count" : place.count,
+			"state" : place.state
+		});
+	}
 }
 
 function clickZar() {
-	this.statecolor=0;
-	math = Math.floor((Math.random() * zar.zarimg.length));
-	math1 = Math.floor((Math.random() * zar.zarimg.length));
+	var math = Math.floor((Math.random() * zar.length));
+	var math1 = Math.floor((Math.random() * zar.length));
 	var zardiv = document.getElementById("zar");
-	document.getElementById('image1').src = zar.zarimg[math].srcimg;
-	document.getElementById('image2').src = zar.zarimg[math1].srcimg;
-	Place.prototype.chose(statecolor);
+	document.getElementById('image1').src = "images/zar" + [math] + ".png";
+	document.getElementById('image2').src = "images/zar" + [math1] + ".png";
+	Place.prototype.choose(math, math1);
 }
+
 var nardy = new Nardy();
-var place = new Place();
-var lasttb = 0;
-var math;
-var math1;
-var e;
 var f;
 var f1;
+var kkk = 0;
 
-function iftrue() {
-	if (zar.zarimg[math].imgindex == e || zar.zarimg[math1].imgindex == e) {
-		alert("yes");
-	} else {
-		alert("no")
+Nardy.table = function() {
+	var loop = 0;
+	var tb = document.getElementById("table1ID");
+	for (var i = 0; i < 3; i++) {
+		var tr = document.createElement('tr');
+		for (var i1 = 0; i1 < 12; i1++) {
+			var td = document.createElement('td');
+			if (i1 == 5) {
+				td.style.width = "78px";
+			}
+			if (i == 1) {
+				tr.style.height = "420px";
+			} else {
+
+				td.setAttribute("id", "tdid" + loop);
+				nardy.tdarr.push("tdid" + loop);
+				tr.appendChild(td);
+				loop++;
+			}
+		}
+		tb.appendChild(tr);
 	}
+
 }
-
 function redStone() {
-	var index = 12;
-	var tb = document.getElementById("table2ID");
-	if (lasttb == 0) {
-		Nardy.table(index, tb);
-		lasttb++;
-	}
-	Place.prototype.convas(index, -23, 1);
-	iftrue();
-clickZar.prototype.statecolor=1;
+	nardy.countState.imgcount[12].count = 15;
+	nardy.countState.imgcount[12].state = 1;
+	document.getElementById("hidebut1").style.display = "none";
+	Nardy.prototype.drowPlace(12, 1);
 }
 
 function whiteStone() {
-	var index = 0;
-	var tb = document.getElementById("table1ID");
-	Nardy.table(index, tb);
-	Place.prototype.convas(index, 23, 0);
-	iftrue();
-	Place.prototype.chose(0);
-	clickZar.prototype.statecolor=2;
+	nardy.countState.imgcount[11].count = 15;
+	nardy.countState.imgcount[11].state = 0;
+	document.getElementById("hidebut2").style.display = "none";
+	Nardy.table();
+	Nardy.prototype.drowPlace(0, 0);
 }
 
-Nardy.table = function(index, tb) {
-	
-	var tr = document.createElement('tr');
-	for (var i1 = index; i1 < index + 12; i1++) {
-		var td = document.createElement('td');
-		if (i1 == index + 5) {
-			td.style.width = "78px";
-		}
-		td.setAttribute("id", "tdid" + i1);
-		nardy.tdarr.push("tdid" + i1);
-		tr.appendChild(td);
-		tb.appendChild(tr);
-	}
-}
-
-Place.prototype.chose = function(state) {
-
-	var pp = 0;
-	for (var i1 = 0; i1 < 24; i1++) {
-		document.getElementById(nardy.tdarr[i1]).onclick = function() {
-			if (pp == 0) {
-				var tdsid1 = this.id;
-				f1 = tdsid1.slice(4, 6);
-				count.imgcount[f1] = count.imgcount[f1] - 1;
-				//	alert(f1);
-				alert("remove" + count.imgcount[f1]);
-				pp = 1;
-			} else {
-				var tdsid = this.id;
-				f = tdsid.slice(4, 6);
-				count.imgcount[f] = count.imgcount[f] + 1;
-				alert("add" + count.imgcount[f]);
-				pp = 0;
-				if (parseInt(f1) >= 12) {
-					e = parseInt(f) - parseInt(f1);
-				} else {
-					e = parseInt(f1) - parseInt(f);
-				}
-				if(state==0 &&  parseInt(f)>11){
-					e = parseInt(f) - parseInt(f1);
-				alert("fgfgdff");
-				}
-
-			}
-
-		}
-	}
-}
-
-Place.prototype.convas = function(index, top, state) {
+Nardy.prototype.drowPlace = function(index, state) {
 
 	for (var i1 = index; i1 < index + 12; i1++) {
-		td =document.getElementById(nardy.tdarr[i1]);
-		for ( i = 0; i < count.imgcount[i1]; i++) {
+		td = document.getElementById(nardy.tdarr[i1]);
+		for ( i = 0; i < nardy.countState.imgcount[i1].count; i++) {
 			var img = document.createElement("img");
 			if (state == 0) {
-				img.src =place.imgwhite;
+				img.src = place.imgwhite;
 			} else {
 				img.src = place.imgred;
 			}
 			td.appendChild(img);
-			img.style.top += i * (top) + 'px';
+			if (state == 0) {
+				img.style.top += i * 23 + 'px';
+			}
+			if (state == 1) {
+				img.style.bottom += i * 23 + 'px';
+			}
+			img.style.display = "block";
 		}
 	}
+}
+Place.prototype.choose = function(math, math1) {
+	kkk++;
+	var hhh = 0;
+	var step;
+	var insertStone = 0;
+	for (var i1 = 0; i1 < 24; i1++) {
+		document.getElementById(nardy.tdarr[i1]).onclick = function() {
+			if (insertStone == 0) {
+				var tdsid1 = this.id;
+				f1 = parseInt(tdsid1.slice(4, 6));
+				alert("remove" + nardy.countState.imgcount[f1].count);
+				insertStone = 1;
+				//
+			} else {
+				var tdsid = this.id;
+				f = parseInt(tdsid.slice(4, 6));
+				alert("add" + nardy.countState.imgcount[f].count);
+				insertStone = 0;
+				if (f1 >= 12) {
+					step = f - f1;
+				} else {
+					step = f1 - f;
+				}
+			
+				if (zar[math] == step || zar[math1] == step) {
+					nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
+					nardy.countState.imgcount[f].count = nardy.countState.imgcount[f].count + 1;
+					alert("hhh=" + hhh);
+					if (hhh < 2) {
+						hhh++;
+						if (kkk % 2 != 0) {
+							nardy.countState.imgcount[f1].state = 0;
+							Nardy.prototype.drowPlace(0, 0);
+
+						} else {
+							nardy.countState.imgcount[f1].state = 1;
+							Nardy.prototype.drowPlace(12, 1);
+						}
+
+					}
+
+				}
+			}
+
+		}
+	}
+
 }
 /*function p(img){
  img.onmousedown = function() {
