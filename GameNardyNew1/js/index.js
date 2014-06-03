@@ -62,7 +62,7 @@ function redStone() {
 	nardy.countState.imgcount[12].count = 15;
 	nardy.countState.imgcount[12].state = 1;
 	document.getElementById("hidebut1").style.display = "none";
-	Nardy.prototype.drowPlace(12, 1);
+	Nardy.prototype.drowPlace();
 }
 
 function whiteStone() {
@@ -70,28 +70,24 @@ function whiteStone() {
 	nardy.countState.imgcount[11].state = 0;
 	document.getElementById("hidebut2").style.display = "none";
 	Nardy.table();
-	Nardy.prototype.drowPlace(0, 0);
+	Nardy.prototype.drowPlace();
 }
 
-Nardy.prototype.drowPlace = function(index, state) {
+Nardy.prototype.drowPlace = function(index) {
 
-	for (var i1 = index; i1 < index + 12; i1++) {
+	for (var i1 = 0; i1 < 24; i1++) {
 		td = document.getElementById(nardy.tdarr[i1]);
 		for ( i = 0; i < nardy.countState.imgcount[i1].count; i++) {
 			var img = document.createElement("img");
-			if (state == 0) {
+			if (nardy.countState.imgcount[i1].state == 0) {
 				img.src = place.imgwhite;
+				img.style.top += i * 23 + 'px';
 			} else {
 				img.src = place.imgred;
-			}
-			td.appendChild(img);
-			if (state == 0) {
-				img.style.top += i * 23 + 'px';
-			}
-			if (state == 1) {
 				img.style.bottom += i * 23 + 'px';
 			}
-			img.style.display = "block";
+			td.appendChild(img);
+			//img.style.display = "block";
 		}
 	}
 }
@@ -102,36 +98,45 @@ Place.prototype.choose = function(math, math1) {
 	var insertStone = 0;
 	for (var i1 = 0; i1 < 24; i1++) {
 		document.getElementById(nardy.tdarr[i1]).onclick = function() {
+
 			if (insertStone == 0) {
 				var tdsid1 = this.id;
 				f1 = parseInt(tdsid1.slice(4, 6));
-				alert("remove" + nardy.countState.imgcount[f1].count);
+				alert(f1);
 				insertStone = 1;
 				//
 			} else {
 				var tdsid = this.id;
 				f = parseInt(tdsid.slice(4, 6));
-				alert("add" + nardy.countState.imgcount[f].count);
+				alert(f);
 				insertStone = 0;
+
 				if (f1 >= 12) {
 					step = f - f1;
-				} else {
+				}else  if (f1 <= 11 && f<=11) {
 					step = f1 - f;
+				}else
+				if (f >= 12 && f1<=11) {
+					step = (f - 11) + f1;
+					alert("ok"+step+math1+math);
+					
 				}
-			
 				if (zar[math] == step || zar[math1] == step) {
 					nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
 					nardy.countState.imgcount[f].count = nardy.countState.imgcount[f].count + 1;
-					alert("hhh=" + hhh);
+					alert("remove" + nardy.countState.imgcount[f1].count);
+					alert("add" + nardy.countState.imgcount[f].count);
+					//alert("hhh=" + hhh);
 					if (hhh < 2) {
 						hhh++;
 						if (kkk % 2 != 0) {
-							nardy.countState.imgcount[f1].state = 0;
-							Nardy.prototype.drowPlace(0, 0);
+							nardy.countState.imgcount[f].state = 0;
+
+							Nardy.prototype.drowPlace();
 
 						} else {
-							nardy.countState.imgcount[f1].state = 1;
-							Nardy.prototype.drowPlace(12, 1);
+							nardy.countState.imgcount[f].state = 1;
+							Nardy.prototype.drowPlace();
 						}
 
 					}
