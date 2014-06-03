@@ -79,11 +79,18 @@ Nardy.prototype.drowPlace = function(index) {
 		td = document.getElementById(nardy.tdarr[i1]);
 		for ( i = 0; i < nardy.countState.imgcount[i1].count; i++) {
 			var img = document.createElement("img");
-			if (nardy.countState.imgcount[i1].state == 0) {
+			if (i1<12) {
+				
+				if(nardy.countState.imgcount[i1].state==0){
 				img.src = place.imgwhite;
+				}else{
+				img.src = place.imgred;}
 				img.style.top += i * 23 + 'px';
 			} else {
-				img.src = place.imgred;
+					if(nardy.countState.imgcount[i1].state==0){
+				img.src = place.imgwhite;
+				}else{
+				img.src = place.imgred;}
 				img.style.bottom += i * 23 + 'px';
 			}
 			td.appendChild(img);
@@ -111,14 +118,16 @@ Place.prototype.choose = function(math, math1) {
 				alert(f);
 				insertStone = 0;
 
-				if (f1 >= 12) {
+				if (f1 >= 12 && f >= 12) {
 					step = f - f1;
 				}else  if (f1 <= 11 && f<=11) {
 					step = f1 - f;
-				}else
-				if (f >= 12 && f1<=11) {
+				}else if (f >= 12 && f1<=11) {
 					step = (f - 11) + f1;
-					alert("ok"+step+math1+math);
+									
+				}else if (f <= 11 && f1>=12) {
+					step = (23 - 2*f) +1;
+					alert("ok"+step+"--"+math1+"--"+math);
 					
 				}
 				if (zar[math] == step || zar[math1] == step) {
