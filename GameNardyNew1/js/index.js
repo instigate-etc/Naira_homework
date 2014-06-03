@@ -131,7 +131,7 @@ Place.prototype.choose = function(math, math1) {
 					
 				}
 				if (zar[math] == step || zar[math1] == step) {
-					$("#tableID img").css("display","none");
+					
 							if((nardy.countState.imgcount[f1].state==0 && (nardy.countState.imgcount[f].state==0 || nardy.countState.imgcount[f].state==2)) ||
 							(nardy.countState.imgcount[f1].state==1 && (nardy.countState.imgcount[f].state==1 || nardy.countState.imgcount[f].state==2))
 							){
@@ -145,6 +145,7 @@ Place.prototype.choose = function(math, math1) {
 					//alert("hhh=" + hhh);
 					if (hhh < 2) {
 						hhh++;
+						$("#tableID img").css("display","none");
 						if (kkk % 2 != 0) {
 							nardy.countState.imgcount[f].state = 0;
 							Nardy.prototype.drowPlace();
