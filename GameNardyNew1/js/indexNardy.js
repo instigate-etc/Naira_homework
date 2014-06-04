@@ -36,7 +36,7 @@ var kkk = 0;
 
 Nardy.table = function() {
 	var loop = 0;
-	var tb = document.getElementById("table1ID");
+	var tb = document.getElementById("tableID");
 	for (var i = 0; i < 3; i++) {
 		var tr = document.createElement('tr');
 		for (var i1 = 0; i1 < 12; i1++) {
@@ -74,35 +74,35 @@ function whiteStone() {
 }
 
 Nardy.prototype.drowPlace = function() {
-
+	$("#table img").hide();
 	for (var i1 = 0; i1 < 24; i1++) {
 		td = document.getElementById(nardy.tdarr[i1]);
 		for ( i = 0; i < nardy.countState.imgcount[i1].count; i++) {
 			var img = document.createElement("img");
-			
-			if (i1<12) {
-				
-				if(nardy.countState.imgcount[i1].state==0){
-				img.src = place.imgwhite;
-				}else{
-				img.src = place.imgred;}
-					img.style.display = "block";
+
+			if (i1 < 12) {
+				if (nardy.countState.imgcount[i1].state == 0) {
+					img.src = place.imgwhite;
+				} else {
+					img.src = place.imgred;
+				}
 				img.style.top += i * 23 + 'px';
-				
+
 			} else {
-					if(nardy.countState.imgcount[i1].state==0){
-				img.src = place.imgwhite;
-				}else{
-				img.src = place.imgred;}
-					img.style.display = "block";
+				if (nardy.countState.imgcount[i1].state == 0) {
+					img.src = place.imgwhite;
+				} else {
+					img.src = place.imgred;
+				}
 				img.style.bottom += i * 23 + 'px';
 			}
 			td.appendChild(img);
-			//img.style.display = "block";
+			img.style.display = "block";
 		}
 	}
 }
 Place.prototype.choose = function(math, math1) {
+
 	kkk++;
 	var hhh = 0;
 	var step;
@@ -113,65 +113,62 @@ Place.prototype.choose = function(math, math1) {
 			if (insertStone == 0) {
 				var tdsid1 = this.id;
 				f1 = parseInt(tdsid1.slice(4, 6));
-				alert(f1);
 				insertStone = 1;
 				//
 			} else {
 				var tdsid = this.id;
 				f = parseInt(tdsid.slice(4, 6));
-				alert(f);
 				insertStone = 0;
 
 				if (f1 >= 12 && f >= 12) {
 					step = f - f1;
-				}else  if (f1 <= 11 && f<=11) {
+				} else if (f1 <= 11 && f <= 11) {
 					step = f1 - f;
-				}else if (f >= 12 && f1<=11) {
+				} else if (f >= 12 && f1 <= 11) {
 					step = (f - 11) + f1;
-									
-				}else if (f <= 11 && f1>=12) {
-					step = (23 - 2*f) +1;
-					alert("ok"+step+"--"+math1+"--"+math);
-					
+
+				} else if (f <= 11 && f1 >= 12) {
+					step = (23 - 2 * f) + 1;
+					alert("ok" + step + "--" + math1 + "--" + math);
+
 				}
+				stateChoes = nardy.countState.imgcount[f1].state;
+				stateInsert = nardy.countState.imgcount[f].state;
+				countChoes=nardy.countState.imgcount[f1].count;
+				countInsert=nardy.countState.imgcount[f].count;
 				if (zar[math] == step || zar[math1] == step) {
-					if (hhh < 2) {
-						hhh++;
-						if (kkk % 2 != 0) {
-							
-					if(nardy.countState.imgcount[f1].state==0 && (nardy.countState.imgcount[f].state==0  || nardy.countState.imgcount[f].state==2)){
-						
-					nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
-					nardy.countState.imgcount[f].count = nardy.countState.imgcount[f].count + 1;
-					alert("remove" + nardy.countState.imgcount[f1].count);
-					alert("add" + nardy.countState.imgcount[f].count);}else{alert("fhgjdfghjdfhgjdfghdjkfffffffffff");}
-					
-					//alert("hhh=" + hhh);
-					
-							
-nardy.countState.imgcount[f].state = 0;
-							Nardy.prototype.drowPlace();
 
-						} else {
-							nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
-					nardy.countState.imgcount[f].count = nardy.countState.imgcount[f].count + 1;
-					alert("remove" + nardy.countState.imgcount[f1].count);
-					alert("add" + nardy.countState.imgcount[f].count);}
-					if(nardy.countState.imgcount[f1].count==0){
-						nardy.countState.imgcount[f1].state=2;
-					} 
-							nardy.countState.imgcount[f].state = 1;
-							Nardy.prototype.drowPlace();
+					if ((statechoes == 0 && (stateInsert == 0 || stateInsert == 2)) || (statechoes == 1 && (stateInsert == 1 || stateInsert == 2))) {
+						nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
+						nardy.countState.imgcount[f].count = nardy.countState.imgcount[f].count + 1;
+						//alert("remove" + nardy.countState.imgcount[f1].count);
+						//alert("add" + nardy.countState.imgcount[f].count);
+						if (nardy.countState.imgcount[f1].count == 0) {
+							nardy.countState.imgcount[f1].state = 2;
 						}
+						//alert("hhh=" + hhh);
+						if (hhh < 2) {
+							hhh++;
+							//$("#tableID img").css("display", "none");
+							document.getElementById("tableID").getElemetsByTagName("img").style.display="none";
+							if (kkk % 2 != 0) {
+								nardy.countState.imgcount[f].state = 0;
+								Nardy.prototype.drowPlace();
 
+							} else {
+								nardy.countState.imgcount[f].state = 1;
+								Nardy.prototype.drowPlace();
+							}
+
+						}
 					}
-
 				}
 			}
 
 		}
 	}
 
+}
 /*function p(img){
  img.onmousedown = function() {
  this.style.position = 'absolute'

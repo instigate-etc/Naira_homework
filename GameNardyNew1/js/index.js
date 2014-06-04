@@ -12,7 +12,7 @@ function Nardy() {
 	this.countState = {
 		"imgcount" : []
 	};
-	for ( i = 1; i < 24; i++) {
+	for ( i = 0; i < 24; i++) {
 		this.countState.imgcount.push({
 			"count" : place.count,
 			"state" : place.state
@@ -30,9 +30,7 @@ function clickZar() {
 }
 
 var nardy = new Nardy();
-var f;
-var f1;
-var kkk = 0;
+var redOrWhite = 0;
 
 Nardy.table = function() {
 	var loop = 0;
@@ -74,24 +72,25 @@ function whiteStone() {
 }
 
 Nardy.prototype.drowPlace = function() {
-$("#table img").hide();
-	for (var i1 = 0; i1 < 24; i1++) {
+	$("#table img").hide();
+	for (var i1 = 0; i1 <= 24; i1++) {
 		td = document.getElementById(nardy.tdarr[i1]);
 		for ( i = 0; i < nardy.countState.imgcount[i1].count; i++) {
 			var img = document.createElement("img");
-			
-			if (i1<12) {
-				if(nardy.countState.imgcount[i1].state==0){
-				img.src = place.imgwhite;
-				}else{
-				img.src = place.imgred;}
+
+			if (i1 < 12) {
+				if (nardy.countState.imgcount[i1].state == 0) {
+					img.src = place.imgwhite;
+				} else {
+					img.src = place.imgred;
+				}
 				img.style.top += i * 23 + 'px';
-				
 			} else {
-					if(nardy.countState.imgcount[i1].state==0){
-				img.src = place.imgwhite;
-				}else{
-				img.src = place.imgred;}
+				if (nardy.countState.imgcount[i1].state == 0) {
+					img.src = place.imgwhite;
+				} else {
+					img.src = place.imgred;
+				}
 				img.style.bottom += i * 23 + 'px';
 			}
 			td.appendChild(img);
@@ -99,64 +98,71 @@ $("#table img").hide();
 		}
 	}
 }
+
 Place.prototype.choose = function(math, math1) {
-	
-	kkk++;
-	var hhh = 0;
+	var f;
+	var f1;
+	redOrWhite++;
+	var stepPlayer = 0;
 	var step;
 	var insertStone = 0;
-	for (var i1 = 0; i1 < 24; i1++) {
-		document.getElementById(nardy.tdarr[i1]).onclick = function() {
+	for (var i1 = 0; i1 <= 24; i1++) {
 
+		document.getElementById(nardy.tdarr[i1]).onclick = function() {
 			if (insertStone == 0) {
 				var tdsid1 = this.id;
 				f1 = parseInt(tdsid1.slice(4, 6));
 				insertStone = 1;
-				//
+				alert("remove");
 			} else {
 				var tdsid = this.id;
 				f = parseInt(tdsid.slice(4, 6));
 				insertStone = 0;
-
+				alert("add");
 				if (f1 >= 12 && f >= 12) {
 					step = f - f1;
-				}else  if (f1 <= 11 && f<=11) {
+				} else if (f1 <= 11 && f <= 11) {
 					step = f1 - f;
-				}else if (f >= 12 && f1<=11) {
+				} else if (f >= 12 && f1 <= 11) {
 					step = (f - 11) + f1;
-									
-				}else if (f <= 11 && f1>=12) {
-					step = (23 - 2*f) +1;
-					alert("ok"+step+"--"+math1+"--"+math);
-					
+
+				} else if (f <= 11 && f1 >= 12) {
+					step = 23 - f - (f1 - 12);
 				}
+
+				var stateChoes = nardy.countState.imgcount[f1].state;
+				var stateInsert = nardy.countState.imgcount[f].state;
+				var countChoes = nardy.countState.imgcount[f1].count;
+				var countInsert = nardy.countState.imgcount[f].count;
+
 				if (zar[math] == step || zar[math1] == step) {
-					
-							if((nardy.countState.imgcount[f1].state==0 && (nardy.countState.imgcount[f].state==0 || nardy.countState.imgcount[f].state==2)) ||
-							(nardy.countState.imgcount[f1].state==1 && (nardy.countState.imgcount[f].state==1 || nardy.countState.imgcount[f].state==2))
-							){
-					nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
-					nardy.countState.imgcount[f].count = nardy.countState.imgcount[f].count + 1;
-					//alert("remove" + nardy.countState.imgcount[f1].count);
-					//alert("add" + nardy.countState.imgcount[f].count);
-					if(nardy.countState.imgcount[f1].count==0){
-						nardy.countState.imgcount[f1].state=2;
-					} 
-					//alert("hhh=" + hhh);
-					if (hhh < 2) {
-						hhh++;
-						$("#tableID img").css("display","none");
-						if (kkk % 2 != 0) {
-							nardy.countState.imgcount[f].state = 0;
-							Nardy.prototype.drowPlace();
 
-						} else {
-							nardy.countState.imgcount[f].state = 1;
-							Nardy.prototype.drowPlace();
+					if ((stateChoes == 0 && (stateInsert == 0 || stateInsert == 2)) || (stateChoes == 1 && (stateInsert == 1 || stateInsert == 2))) {
+						nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
+						nardy.countState.imgcount[f].count = nardy.countState.imgcount[f].count + 1;
+						if (nardy.countState.imgcount[f1].count == 0) {
+							nardy.countState.imgcount[f1].state = 2;
 						}
+						var stepPlayer1 = 2;
+						if (math == math1) {
+							var stepPlayer1 = 4;
+						}
+						if (stepPlayer < stepPlayer1) {
+							stepPlayer++;
+							$("#tableID img").css("display", "none");
+							//document.getElementById("tableID").getElemetsByTagName("img").style.display="none";
+							if (redOrWhite % 2 != 0) {
+								nardy.countState.imgcount[f].state = 0;
+								Nardy.prototype.drowPlace();
 
+							} else if (redOrWhite % 2 == 0) {
+								nardy.countState.imgcount[f].state = 1;
+								Nardy.prototype.drowPlace();
+							}
+
+						}
 					}
-}	
+					gameOver();
 				}
 			}
 
@@ -164,6 +170,15 @@ Place.prototype.choose = function(math, math1) {
 	}
 
 }
+function gameOver() {
+	if (nardy.countState.imgcount[23].count == 15 && nardy.countState.imgcount[23].state == 0) {
+		alert("Game over:white player");
+
+	} else if (nardy.countState.imgcount[0].count == 15 && nardy.countState.imgcount[0].state == 1) {
+		alert("Game over: Red player");
+	}
+}
+
 /*function p(img){
  img.onmousedown = function() {
  this.style.position = 'absolute'
