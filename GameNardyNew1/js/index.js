@@ -81,14 +81,14 @@ Nardy.prototype.drowPlace = function() {
 			if (i1 < 12) {
 				if (nardy.countState.imgcount[i1].state == 0) {
 					img.src = place.imgwhite;
-				} else {
+				} else if (nardy.countState.imgcount[i1].state == 1){
 					img.src = place.imgred;
 				}
 				img.style.top += i * 23 + 'px';
 			} else {
 				if (nardy.countState.imgcount[i1].state == 0) {
 					img.src = place.imgwhite;
-				} else {
+				} else if (nardy.countState.imgcount[i1].state == 1){
 					img.src = place.imgred;
 				}
 				img.style.bottom += i * 23 + 'px';
@@ -138,7 +138,7 @@ Place.prototype.choose = function(math, math1) {
 				if (zar[math] == step || zar[math1] == step) {
 
 					if ((stateChoes == 0 && (stateInsert == 0 || stateInsert == 2)) || (stateChoes == 1 && (stateInsert == 1 || stateInsert == 2))) {
-						nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
+								nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
 						nardy.countState.imgcount[f].count = nardy.countState.imgcount[f].count + 1;
 						if (nardy.countState.imgcount[f1].count == 0) {
 							nardy.countState.imgcount[f1].state = 2;
@@ -152,10 +152,12 @@ Place.prototype.choose = function(math, math1) {
 							$("#tableID img").css("display", "none");
 							//document.getElementById("tableID").getElemetsByTagName("img").style.display="none";
 							if (redOrWhite % 2 != 0) {
+						
 								nardy.countState.imgcount[f].state = 0;
 								Nardy.prototype.drowPlace();
 
 							} else if (redOrWhite % 2 == 0) {
+									
 								nardy.countState.imgcount[f].state = 1;
 								Nardy.prototype.drowPlace();
 							}
