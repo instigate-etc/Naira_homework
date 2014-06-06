@@ -21,6 +21,7 @@ function Nardy() {
 }
 
 function clickZar() {
+	document.getElementById("zarbut").style.display = "none";
 	var math = Math.floor((Math.random() * zar.length));
 	var math1 = Math.floor((Math.random() * zar.length));
 	var zardiv = document.getElementById("zar");
@@ -106,6 +107,9 @@ Place.prototype.choose = function(math, math1) {
 	var stepPlayer = 0;
 	var step;
 	var insertStone = 0;
+	var redState=1;
+	var whiteState=0;
+	var emptyState=2;
 	for (var i1 = 0; i1 <= 24; i1++) {
 
 		document.getElementById(nardy.tdarr[i1]).onclick = function() {
@@ -138,25 +142,39 @@ Place.prototype.choose = function(math, math1) {
 					//	if ((stateChoes == 0 && (stateInsert == 0 || stateInsert == 2)) ) {
 
 					var stepPlayer1 = 2;
-					if (math == math1) {
-						var stepPlayer1 = 4;
-					}
+					
 					if (stepPlayer < stepPlayer1) {
 						stepPlayer++;
+							
 						$("#tableID img").css("display", "none");
 						//document.getElementById("tableID").getElemetsByTagName("img").style.display="none";
-						if (redOrWhite % 2 != 0 && (stateChoes == 0 && (stateInsert == 0 || stateInsert == 2))) {
-							nardy.countState.imgcount[f].state = 0;
+						if (redOrWhite % 2 != 0 && (stateChoes == whiteState && (stateInsert == whiteState || stateInsert == emptyState))) {
+							
+							nardy.countState.imgcount[f].state = whiteState;
 							decCount(f1, f);
 							Nardy.prototype.drowPlace();
+						
 
-						} else if (redOrWhite % 2 == 0 && (stateChoes == 1 && (stateInsert == 1 || stateInsert == 2))) {
-							nardy.countState.imgcount[f].state = 1;
+						} else if (redOrWhite % 2 == 0 && (stateChoes == redState && (stateInsert == redState || stateInsert == emptyState))) {
+							nardy.countState.imgcount[f].state = redState;
 							decCount(f1, f);
+								
 							Nardy.prototype.drowPlace();
+					
 						}
 
 					}
+					if (stepPlayer ==2){
+						if (redOrWhite % 2 != 0 ){
+							document.getElementById("red").style.width ="50px";
+							document.getElementById("white").style.width ="25px";
+				
+						}else{
+							document.getElementById("white").style.width ="50px";
+							document.getElementById("red").style.width ="25px";
+						}
+						clickZar();
+						}
 
 					gameOver();
 				}
