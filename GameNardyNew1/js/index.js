@@ -111,6 +111,9 @@ Place.prototype.choose = function(math, math1) {
 	var redState = 1;
 	var whiteState = 0;
 	var emptyState = 2;
+	var zar1 = math;
+	var zar2 = math1;
+	var h = true;
 	for (var i1 = 0; i1 < 24; i1++) {
 
 		document.getElementById(nardy.tdarr[i1]).onclick = function() {
@@ -141,17 +144,19 @@ Place.prototype.choose = function(math, math1) {
 					if (math == math1) {
 						stepPlayer1 = 4;
 					}
+
 					if (stepPlayer < stepPlayer1) {
-						gameOver(math, math1);
+
+						gameOver(zar1, zar2);
 						//document.getElementById("tableID").getElemetsByTagName("img").style.display="none";
 						if (redOrWhite % 2 != 0 && (stateChoes == whiteState && (stateInsert == whiteState || stateInsert == emptyState))) {
 							stepPlayer++;
 							nardy.countState.imgcount[f].state = whiteState;
-							decCount(f1, f);
+							decCount(f1, f,zar1,zar2,step,stepPlayer1);
 						} else if (redOrWhite % 2 == 0 && (stateChoes == redState && (stateInsert == redState || stateInsert == emptyState))) {
 							stepPlayer++;
 							nardy.countState.imgcount[f].state = redState;
-							decCount(f1, f);
+							decCount(f1, f,zar1,zar2,step,stepPlayer1);
 						}
 					}
 					if (stepPlayer == stepPlayer1) {
@@ -174,11 +179,17 @@ Place.prototype.choose = function(math, math1) {
 	}
 
 }
-function decCount(f1, f) {
+function decCount(f1, f,math,math1,step,stepPlayer1) {
 	nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
 	nardy.countState.imgcount[f].count = nardy.countState.imgcount[f].count + 1;
 	if (nardy.countState.imgcount[f1].count == 0) {
 		nardy.countState.imgcount[f1].state = 2;
+	}
+	if (zar[math] == step && stepPlayer1 != 4) {
+		math = -1;
+	}
+	if (zar[math1] == step && stepPlayer1 != 4) {
+		math1 = -1;
 	}
 	$("#tableID img").css("display", "none");
 	Nardy.prototype.drowPlace();
