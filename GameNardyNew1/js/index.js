@@ -47,8 +47,8 @@ Nardy.table = function() {
 				tr.style.height = "420px";
 			} else {
 
-				td.setAttribute("id", "tdid" + loop);
-				nardy.tdarr.push("tdid" + loop);
+				td.setAttribute("id", loop);
+				nardy.tdarr.push(loop);
 				tr.appendChild(td);
 				loop++;
 			}
@@ -69,12 +69,13 @@ function whiteStone() {
 	nardy.countState.imgcount[11].state = 0;
 	document.getElementById("hidebut2").style.display = "none";
 	Nardy.table();
+	document.getElementById("white").style.width = "50px";
 	Nardy.prototype.drowPlace();
 }
 
 Nardy.prototype.drowPlace = function() {
 	$("#table img").hide();
-	for (var i1 = 0; i1 <= 24; i1++) {
+	for (var i1 = 0; i1 < 24; i1++) {
 		td = document.getElementById(nardy.tdarr[i1]);
 		for ( i = 0; i < nardy.countState.imgcount[i1].count; i++) {
 			var img = document.createElement("img");
@@ -107,19 +108,17 @@ Place.prototype.choose = function(math, math1) {
 	var stepPlayer = 0;
 	var step;
 	var insertStone = 0;
-	var redState=1;
-	var whiteState=0;
-	var emptyState=2;
-	for (var i1 = 0; i1 <= 24; i1++) {
+	var redState = 1;
+	var whiteState = 0;
+	var emptyState = 2;
+	for (var i1 = 0; i1 < 24; i1++) {
 
 		document.getElementById(nardy.tdarr[i1]).onclick = function() {
 			if (insertStone == 0) {
-				var tdsid1 = this.id;
-				f1 = parseInt(tdsid1.slice(4, 6));
+				f1 = parseInt(this.id);
 				insertStone = 1;
-				} else {
-				var tdsid = this.id;
-				f = parseInt(tdsid.slice(4, 6));
+			} else {
+				f = parseInt(this.id);
 				insertStone = 0;
 				if (f1 >= 12 && f >= 12) {
 					step = f - f1;
@@ -138,45 +137,36 @@ Place.prototype.choose = function(math, math1) {
 				var countInsert = nardy.countState.imgcount[f].count;
 
 				if (zar[math] == step || zar[math1] == step) {
-
-					//	if ((stateChoes == 0 && (stateInsert == 0 || stateInsert == 2)) ) {
-
 					var stepPlayer1 = 2;
-					
+					if (math == math1) {
+						stepPlayer1 = 4;
+					}
 					if (stepPlayer < stepPlayer1) {
-						stepPlayer++;
-							
-						$("#tableID img").css("display", "none");
+						gameOver(math, math1);
 						//document.getElementById("tableID").getElemetsByTagName("img").style.display="none";
 						if (redOrWhite % 2 != 0 && (stateChoes == whiteState && (stateInsert == whiteState || stateInsert == emptyState))) {
-							
+							stepPlayer++;
 							nardy.countState.imgcount[f].state = whiteState;
 							decCount(f1, f);
-							Nardy.prototype.drowPlace();
-						
-
 						} else if (redOrWhite % 2 == 0 && (stateChoes == redState && (stateInsert == redState || stateInsert == emptyState))) {
+							stepPlayer++;
 							nardy.countState.imgcount[f].state = redState;
 							decCount(f1, f);
-								
-							Nardy.prototype.drowPlace();
-					
 						}
-
 					}
-					if (stepPlayer ==2){
-						if (redOrWhite % 2 != 0 ){
-							document.getElementById("red").style.width ="50px";
-							document.getElementById("white").style.width ="25px";
-				
-						}else{
-							document.getElementById("white").style.width ="50px";
-							document.getElementById("red").style.width ="25px";
+					if (stepPlayer == stepPlayer1) {
+						if (redOrWhite % 2 != 0) {
+							document.getElementById("red").style.width = "50px";
+							document.getElementById("white").style.width = "25px";
+
+						} else {
+							document.getElementById("white").style.width = "50px";
+							document.getElementById("red").style.width = "25px";
 						}
 						clickZar();
-						}
 
-					gameOver();
+					}
+
 				}
 			}
 
@@ -190,14 +180,63 @@ function decCount(f1, f) {
 	if (nardy.countState.imgcount[f1].count == 0) {
 		nardy.countState.imgcount[f1].state = 2;
 	}
+	$("#tableID img").css("display", "none");
+	Nardy.prototype.drowPlace();
 }
 
-function gameOver() {
-	if (nardy.countState.imgcount[23].count == 15 && nardy.countState.imgcount[23].state == 0) {
-		alert("Game over:white player");
+function gameOver(math, math1) {
+	var endWhiteCount = 0;
+	var endWhiteState = 1;
+	var endRedCount = 0;
+	var endRedState = 1;
+	for (var i = 18; i < 24; i++) {
+		endWhiteCount += nardy.countState.imgcount[i].count;
+		endWhiteState *= nardy.countState.imgcount[i].state;
+	};
+	for (var i1 = 0; i1 < 6; i1++) {
+		endRedCount += nardy.countState.imgcount[i1].count;
+		endRedState *= nardy.countState.imgcount[i1].state
+	}
+	alert(endWhiteCount);
+	if (endWhiteCount == 2 && endWhiteState != 0) {
+		h(math, math1);
 
-	} else if (nardy.countState.imgcount[0].count == 15 && nardy.countState.imgcount[0].state == 1) {
+	} else if (endRedCount == 15 && endRedState != 0) {
 		alert("Game over: Red player");
+		h(math, math1);
+	}
+}
+
+var g = 1;
+
+function h(math, math1) {
+	for (var i1 = 18; i1 < 24; i1++) {
+		document.getElementById(nardy.tdarr[i1]).onclick = function() {
+			var f1 = parseInt(this.id);
+			alert("11111111111111111111111111");
+			alert(zar[math] + "   " + zar[math1])
+			alert((24 - f1) + " aa ");
+			if ((24 - f1) == zar[math] || (24 - f1) == zar[math1]) {
+				alert("count" + nardy.countState.imgcount[f1].count);
+				alert("Game over:white player");
+				if (nardy.countState.imgcount[f1].count > 0) {
+					nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
+					$("#tableID img").css("display", "none");
+					Nardy.prototype.drowPlace();
+					for (var i2 = 0; i2 < g; i2++) {
+						var img = document.createElement("img");
+						img.src = place.imgred;
+						img.style.right = "30px";
+						img.style.bottom = img.style.bottom + g * 20 + 'px';
+						alert(img.style.bottom);
+						document.getElementById("nardy").appendChild(img);
+					}
+					g++;
+				}
+			} else if (nardy.countState.imgcount[(24 - zar[math])].count == 0 || (nardy.countState.imgcount[(24 - zar[math1])].count == 0)) {
+				alert("ytttttttttttttttttttttt");
+			}
+		}
 	}
 }
 
