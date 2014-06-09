@@ -209,7 +209,7 @@ function gameOver(math, math1) {
 		endRedState *= nardy.countState.imgcount[i1].state
 	}
 	alert(endWhiteCount);
-	if (endWhiteCount == 2 && endWhiteState != 0) {
+	if (endWhiteCount == 15 && endWhiteState == 0) {
 		h(math, math1);
 
 	} else if (endRedCount == 15 && endRedState != 0) {
@@ -218,13 +218,12 @@ function gameOver(math, math1) {
 	}
 }
 
-var g = 1;
+var position = 1;
 
 function h(math, math1) {
 	for (var i1 = 18; i1 < 24; i1++) {
 		document.getElementById(nardy.tdarr[i1]).onclick = function() {
 			var f1 = parseInt(this.id);
-			alert("11111111111111111111111111");
 			alert(zar[math] + "   " + zar[math1])
 			alert((24 - f1) + " aa ");
 			if ((24 - f1) == zar[math] || (24 - f1) == zar[math1]) {
@@ -234,18 +233,17 @@ function h(math, math1) {
 					nardy.countState.imgcount[f1].count = nardy.countState.imgcount[f1].count - 1;
 					$("#tableID img").css("display", "none");
 					Nardy.prototype.drowPlace();
-					for (var i2 = 0; i2 < g; i2++) {
+					for (var i2 = 0; i2 < position; i2++) {
 						var img = document.createElement("img");
 						img.src = place.imgred;
 						img.style.right = "30px";
-						img.style.bottom = img.style.bottom + g * 20 + 'px';
+						img.style.bottom = img.style.bottom + position * 20 + 'px';
 						alert(img.style.bottom);
 						document.getElementById("nardy").appendChild(img);
 					}
-					g++;
+					position++;
 				}
 			} else if (nardy.countState.imgcount[(24 - zar[math])].count == 0 || (nardy.countState.imgcount[(24 - zar[math1])].count == 0)) {
-				alert("ytttttttttttttttttttttt");
 			}
 		}
 	}
